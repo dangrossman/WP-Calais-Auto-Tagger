@@ -24,7 +24,10 @@ add_action('wp_ajax_calais_gettags', 'calais_gettags');
 // Adds the tag suggestion box to the post page, and the configuration link to the settings menu
 
 function calais_init() {
-	add_meta_box('calais', 'Calais Auto Tagger', 'calais_box', 'post', 'normal', 'high');
+	$post_types = apply_filters( 'calais_post_types', array( 'post' ) );
+	foreach( $post_types as $type ) {
+		add_meta_box('calais', 'Calais Auto Tagger', 'calais_box', $type, 'normal', 'high');
+	}
 	add_submenu_page('options-general.php', 'Calais API Key', 'Calais API Key', 10, __FILE__, 'calais_conf');
 }
 
